@@ -1,0 +1,47 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <bean id="userService" class="world.ucode.services.UserService">
+    </bean>
+    <bean id="lotService" class="world.ucode.services.LotService">
+    </bean>
+    <bean id="bidService" class="world.ucode.services.BidService">
+    </bean>
+    <bean id="feedbackService" class="world.ucode.services.FeedbackService">
+    </bean>
+    <bean id="createJSON" class="world.ucode.utils.CreateJSON">
+    </bean>
+    <bean id="pageModelAndView" class="world.ucode.utils.PageModelAndView">
+    </bean>
+    <bean id="sendMail" class="world.ucode.utils.SendMail">
+    </bean>
+    <bean id="authProvider" class="world.ucode.security.AuthProvider">
+    </bean>
+
+    <context:property-placeholder location="classpath:gmail.com.properties"
+                                  ignore-unresolvable="true" />
+    <!-- Класс для отправки писем. -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtps.auth">${mail.smtps.auth}</prop>
+            </props>
+        </property>
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+        <property name="protocol" value="${mail.protocol}" />
+
+    </bean>
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${mail.from}" />
+        <property name="subject" value="Mail subject" />
+    </bean>
+</beans>
